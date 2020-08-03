@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Board
-  attr_reader :current_player, :next_player, :winner
+  attr_reader :current_player, :next_player
 
   def initialize(player_x, player_o)
     @board = [
