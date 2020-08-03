@@ -75,10 +75,6 @@ class Board
   end
 
   def game_over?
-    return true if check_row?
-    return true if check_col?
-    return true if check_diagonal?
-
-    false
+    check_row? || check_col? || check_diagonal?
   end
 end
