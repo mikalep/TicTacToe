@@ -79,15 +79,20 @@ class Board
     false
   end
 
-  def game_over?
-    check_row? || check_col? || check_diagonal? || check_full?
-  end
-
   def check_full?
     return false if @board.any? { |cell| cell.include?('_') }
 
     puts "Game over. It's a tie."
     true
+  end
+
+  def game_over?
+    true if check_full?
+    if check_row? || check_col? || check_diagonal?
+      puts "Congratulations! Player #{@next_player.mark} wins.\n"
+      return true
+    end
+    false
   end
 
   def self.row_mark

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# TODO:
+# Make it so that the players input their position at once?
+
 require './board.rb'
 require './player.rb'
 
