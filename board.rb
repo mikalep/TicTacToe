@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-# better board and play instructions
 class Board
   attr_reader :current_player, :next_player
+
+  @@row_mark = %w[A B C]
 
   def initialize(player_x, player_o)
     @board = [
@@ -26,10 +27,9 @@ class Board
 
   def print_board
     puts '  1 2 3'
-    row_mark = %w[A B C]
 
     @board.each_with_index do |row, idx|
-      print row_mark[idx] + ' '
+      print @@row_mark[idx] + ' '
 
       row.each do |cell|
         print cell + ' '
@@ -49,11 +49,11 @@ class Board
   def check_col?
     @board.each_with_index do |_, idx|
       if @board[0][idx].eql?(@current_player.mark) && @board[1][idx].eql?(@current_player.mark) && @board[2][idx].eql?(@current_player.mark)
-        true
+        return true
       end
 
       if @board[0][idx].eql?(@next_player.mark) && @board[1][idx].eql?(@next_player.mark) && @board[2][idx].eql?(@next_player.mark)
-        true
+        return true
       end
     end
     false
@@ -80,7 +80,17 @@ class Board
   end
 
   def game_over?
-    check_row? || check_col? || check_diagonal?
-    false
+    check_row? || check_col? || check_diagonal? || check_full?
+  end
+
+  def check_full?
+    return false if @board.any? { |cell| cell.include?('_') }
+
+    puts "Game over. It's a tie."
+    true
+  end
+
+  def self.row_mark
+    @@row_mark
   end
 end
