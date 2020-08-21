@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# better board and play instructions
 class Board
   attr_reader :current_player, :next_player
 
@@ -24,9 +25,14 @@ class Board
   end
 
   def print_board
-    @board.each do |row|
+    puts '  1 2 3'
+    row_mark = %w[A B C]
+
+    @board.each_with_index do |row, idx|
+      print row_mark[idx] + ' '
+
       row.each do |cell|
-        print cell
+        print cell + ' '
       end
       puts
     end
@@ -37,18 +43,17 @@ class Board
       return true if row.all? { |mark| mark.eql?(@current_player.mark) }
       return true if row.all? { |mark| mark.eql?(@next_player.mark) }
     end
-
     false
   end
 
   def check_col?
     @board.each_with_index do |_, idx|
       if @board[0][idx].eql?(@current_player.mark) && @board[1][idx].eql?(@current_player.mark) && @board[2][idx].eql?(@current_player.mark)
-        return true
+        true
       end
 
       if @board[0][idx].eql?(@next_player.mark) && @board[1][idx].eql?(@next_player.mark) && @board[2][idx].eql?(@next_player.mark)
-        return true
+        true
       end
     end
     false
@@ -76,5 +81,6 @@ class Board
 
   def game_over?
     check_row? || check_col? || check_diagonal?
+    false
   end
 end
