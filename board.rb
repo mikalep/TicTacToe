@@ -15,10 +15,13 @@ class Board
     @next_player = player_o
   end
 
-  def placement(x, y)
+  def placement(position)
+    x = position.split('')[1].to_i - 1
+    y = Board.row_mark.index(position.split('')[0])
+
     return false if @current_player.mark != 'X' && @current_player.mark != 'O'
     return false if x.negative? || x > 2
-    return false if y.negative? || y > 2
+    return false if y.nil? || y.negative? || y > 2
     return false if @board[y][x] != '_'
 
     @board[y][x] = @current_player.mark
@@ -87,11 +90,13 @@ class Board
   end
 
   def game_over?
-    true if check_full?
     if check_row? || check_col? || check_diagonal?
       puts "Congratulations! Player #{@next_player.mark} wins.\n"
       return true
     end
+
+    return true if check_full?
+
     false
   end
 

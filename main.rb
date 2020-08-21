@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# TODO:
-# Make it so that the players input their position at once?
-
 require './board.rb'
 require './player.rb'
 
@@ -14,19 +11,14 @@ board.print_board
 puts
 
 until board.game_over?
-  puts "Player #{board.current_player.mark}: Please give a position (A, B, C): "
-  pos_y = gets.chomp.upcase
-  pos_y = Board.row_mark.index(pos_y)
+  puts "Player #{board.current_player.mark}: Please give your position (eg. A1, A3, C2): "
+  position = gets.chomp.upcase
 
-  puts "Player #{board.current_player.mark}: Please give a position (1,2,3): "
-  pos_x = gets.chomp.to_i
-  pos_x -= 1
-  puts
-
-  if board.placement(pos_x, pos_y) == false
+  if board.placement(position) == false
     board.print_board
     puts
     puts 'Operation not permitted. Please try again.'
+    puts
     next
   end
 
